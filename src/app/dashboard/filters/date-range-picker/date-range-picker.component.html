@@ -1,0 +1,8 @@
+<input type="text"
+  placeholder="Filter sensors data"
+  class="form-control"
+  bsDaterangepicker
+  [minDate]="minDate"
+  [maxDate]="maxDate"
+  (bsValueChange)="dateRangeSelected($event)"
+  [bsConfig]="{ isAnimated: true }"/>

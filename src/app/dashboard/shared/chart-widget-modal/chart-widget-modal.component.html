@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{headerTitle}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <div class="form-group">
+      <input type="text"
+        [(ngModel)]="title"
+        class="form-control"
+        id="chartTitle"
+        placeholder="Chart Title">
+    </div>
+    <div class="form-group">
+      <input type="text"
+        [(ngModel)]="description"
+        class="form-control"
+        id="chartDescription"
+        placeholder="Chart Description">
+    </div>
+    <div class="custom-control custom-radio custom-control-inline" *ngFor="let chartType of ChartTypes | enumToArray">
+      <input type="radio"
+        [id]="'chartType' + chartType.key"
+        [(ngModel)]="type"
+        name="chartType"
+        [value]="chartType.key"
+        class="custom-control-input">
+      <label class="custom-control-label" [for]="'chartType' + chartType.key">{{chartType.value}} Chart</label>
+    </div>
+  </div>
+  <div class="form-inline" *ngFor="let line of series; let lineIndex = index">
+    <div class="btn-group mb-2 mr-sm-2" dropdown>
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-outline-primary dropdown-toggle"
+              aria-controls="dropdown-basic">
+        {{line.name || 'Select Sensor'}} <span class="caret"></span>
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+          role="menu" aria-labelledby="button-basic">
+        <li role="menuitem" *ngFor="let sensorName of sensorNames">
+          <button type="button" class="dropdown-item" (click)="selectSensorName(line, sensorName)">
+            {{sensorName}}
+          </button>
+        </li>
+      </ul>
+    </div>
+  
+    <div class="input-group mb-2 mr-sm-2">
+      <input class="form-control" [(colorPicker)]="line.color"
+          [style.background]="line.color"/>
+    </div>
+    <div class="input-group mb-2 mr-sm-2" *ngIf="series.length > 1">
+        <button type="button" class="btn btn-danger" (click)="removeSensor(lineIndex)">
+          <fa-icon [icon]="faTrashAlt"></fa-icon>
+        </button>
+      </div>
+  </div>
+  <button type="button" class="btn btn-primary mb-2" (click)="addSensor()">Add New Sensor</button>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger mr-auto" [hidden]="!id" (click)="removeWidget()">Remove</button>
+  <button type="button" class="btn btn-default" (click)="closeModal()">Close</button>
+  <button type="button" class="btn btn-primary" [disabled]="!canSave" (click)="bsModalRef.hide()">Save Widget</button>
+</div>

@@ -1,0 +1,9 @@
+<app-filters></app-filters>
+<div class="row">
+  <div class="col-sm-12 col-md-6" *ngFor="let widget of widgets">
+    <app-chart-widget [widget]="widget"></app-chart-widget>
+  </div>
+  <div class="col-sm-12 col-md-6">
+    <app-add-chart-widget></app-add-chart-widget>
+  </div>
+</div>
